@@ -5,7 +5,7 @@ import java.util.List;
 //Core interface of whole project, almost everything is a note.
 public interface Note {
 
-    List<Note> getSubnotes(); //if note contains subnotes returnslist of them, else returns null
+    List<Note> getSubnotes(); //if note contains subnotes returns list of them, else returns null
 
     //in progress
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -7,6 +8,12 @@ import java.util.List;
 public class ListNote implements Note {
     private ArrayList<Note> content;
 
+    public ListNote(Collection<Note> a){
+        content = new ArrayList<>(a);
+    }
+    public ListNote(){
+        content = new ArrayList<>();
+    }
     @Override
     public List<Note> getSubnotes() {
         return content;
@@ -19,5 +26,9 @@ public class ListNote implements Note {
             ret.append(i.toString());
         }
         return ret.toString();
+    }
+
+    public void append(Note a){
+        content.add(a);
     }
 }
