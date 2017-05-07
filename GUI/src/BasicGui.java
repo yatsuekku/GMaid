@@ -1,79 +1,87 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Stack;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * Created by Matt on 06.05.2017.
  */
-public class BasicGui extends Frame implements ActionListener, WindowListener, MouseListener, MouseMotionListener, KeyListener{
+public class BasicGui extends JFrame implements ActionListener, ListSelectionListener {
 
-    private Label labelCount;
-    private Button buttonCount;
-    private TextField txtfCount;
-    private int count = 0;
+    JTextField txtfCurrentNode;
 
-    private TextField txtfMouseClickX;
-    private TextField txtfMouseClickY;
+    JButton backButton;
+    JList listOfNodes;
 
-    private TextField txtfMousePosX;
-    private TextField txtfMousePosY;
+    JList backtrackList;
 
-    private TextField txtfKeyInput;
-    private TextArea txtaKeyOutput;
+    JTextArea txtaCurrentNoteTexr;
 
-    public BasicGui(){
-        setLayout(new FlowLayout());
+    static Stack<NoteHolder> backtrack;
+    static NoteHolder data;
+    static NoteHolder prev;
 
-        labelCount = new Label("Counter");
-        add(labelCount);
+    public BasicGui() {
+        Container cp = getContentPane();
+        cp.setLayout(new BorderLayout());
 
-        txtfCount = new TextField("0",10);
-        txtfCount.setEditable(false);
-        add(txtfCount);
+        data = new NoteHolder<String>("Ta wiadomość jest rootem hierarchii. \nSłuży do sprawdzenia czy działa.","Testowy Trash!");
+        data.add(new String("I am in subnote 1"), "Subnote 1");
+        data.add(new String("I am in subnote 2"), "Subnote 2");
+        data.add(new String("I am in subnote 3"), "Subnote 3");
+        data.add(new String("I am in subnote 4"), "Subnote 4");
+        data.add(new String("I am in subnote 5"), "Subnote 5");
+        data.add(new String("I am in subnote 6"), "Subnote 6");
+        prev=null;
+        backtrack = new Stack<NoteHolder>();
+        backtrack.push(data);
 
-        buttonCount = new Button("Count");
-        add(buttonCount);
+        JPanel currentObject = new JPanel(new FlowLayout());
+        txtfCurrentNode = new JTextField(data.getName(),100);
+        txtfCurrentNode.setEditable(false);
+        txtfCurrentNode.setHorizontalAlignment(JTextField.CENTER);
+        currentObject.add(txtfCurrentNode);
 
-        add(new Label("X Click"));
-        txtfMouseClickX = new TextField(10);
-        txtfMouseClickX.setEditable(false);
-        add(txtfMouseClickX);
+        JPanel nodeDisplay = new JPanel(new BorderLayout());
+        backButton = new JButton("Go Back!");
+        nodeDisplay.add(backButton,BorderLayout.NORTH);
+        listOfNodes = new JList(data.getList().toArray());
+        listOfNodes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane listScroller = new JScrollPane(listOfNodes);
+        listScroller.setPreferredSize(new Dimension(250,300));
+        nodeDisplay.add(listScroller,BorderLayout.CENTER);
 
-        add(new Label("Y Click"));
-        txtfMouseClickY = new TextField(10);
-        txtfMouseClickY.setEditable(false);
-        add(txtfMouseClickY);
+        JPanel stackDisplay = new JPanel(new BorderLayout());
+        stackDisplay.add(new JLabel("Tree:"),BorderLayout.NORTH);
+        backtrackList = new JList(backtrack.toArray());
+        listOfNodes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane backtrackScroller = new JScrollPane(backtrackList);
+        backtrackScroller.setPreferredSize(new Dimension(150,300));
+        stackDisplay.add(backtrackScroller,BorderLayout.CENTER);
 
-        add(new Label("X Pos"));
-        txtfMousePosX = new TextField(10);
-        txtfMousePosX.setEditable(false);
-        add(txtfMousePosX);
+        JPanel NoteInsideDisplay = new JPanel(new FlowLayout());
+        txtaCurrentNoteTexr = new JTextArea(data.getValue().toString(),8,50);
+        txtaCurrentNoteTexr.setEditable(false);
+        NoteInsideDisplay.add(txtaCurrentNoteTexr);
 
-        add(new Label("Y Pos"));
-        txtfMousePosY = new TextField(10);
-        txtfMousePosY.setEditable(false);
-        add(txtfMousePosY);
 
-        add(new Label("Enter text, please: "));
-        txtfKeyInput = new TextField(10);
-        add(txtfKeyInput);
+        cp.add(currentObject,BorderLayout.NORTH);
+        cp.add(nodeDisplay,BorderLayout.CENTER);
+        cp.add(stackDisplay,BorderLayout.WEST);
+        cp.add(NoteInsideDisplay,BorderLayout.SOUTH);
 
-        txtaKeyOutput = new TextArea(5,40);
-        add(txtaKeyOutput);
+        backButton.addActionListener(this);
+        listOfNodes.addListSelectionListener(this);
+        //addMouseListener(this);
+        //addMouseMotionListener(this);
+       // txtfKeyInput.addKeyListener(this);
 
-        buttonCount.addActionListener(this);
-        addWindowListener(this);
-        addMouseListener(this);
-        addMouseMotionListener(this);
-        txtfKeyInput.addKeyListener(this);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Test Run");
-        setSize(900,200);
+        setSize(800, 600);
         setVisible(true);
-
-        System.out.println(this);
-        System.out.println(labelCount);
-        System.out.println(txtfCount);
-        System.out.println(buttonCount);
     }
 
     public static void main(String[] args) {
@@ -84,24 +92,36 @@ public class BasicGui extends Frame implements ActionListener, WindowListener, M
 
     @Override
     public void actionPerformed(ActionEvent evt){
-        count++;
-        txtfCount.setText(count + "");
+        Object src = evt.getSource();
+        if(src == backButton){
+            if(prev != null){
+                data=data.goBack();
+                prev=data.goBack();
+                txtaCurrentNoteTexr.setText(data.getValue().toString());
+                txtfCurrentNode.setText(data.getName());
+                listOfNodes = new JList(data.getList().toArray());
+                listOfNodes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                backtrack.pop();
+            }
+        }
     }
-
-    // WindowListener overrides
 
     @Override
-    public void windowClosing(WindowEvent evt){
-        System.exit(0);
+    public void valueChanged(ListSelectionEvent evt) {
+        if(evt.getValueIsAdjusting() == false) {
+            if (listOfNodes.getSelectedIndex() != -1) {
+                data = (NoteHolder)(listOfNodes.getSelectedValue());
+                prev = data.goBack();
+                txtaCurrentNoteTexr.setText(data.getValue().toString());
+                txtfCurrentNode.setText(data.getName());
+                listOfNodes = new JList(data.getList().toArray());
+                listOfNodes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                backtrack.push(data);
+            }
+        }
     }
-    @Override public void windowOpened(WindowEvent evt) { }
-    @Override public void windowClosed(WindowEvent evt) { }
-    @Override public void windowIconified(WindowEvent evt) { }
-    @Override public void windowDeiconified(WindowEvent evt) { }
-    @Override public void windowActivated(WindowEvent evt) { }
-    @Override public void windowDeactivated(WindowEvent evt) { }
 
-    //MouseListener overrides
+    /*//MouseListener overrides
 
     @Override
     public void mouseClicked(MouseEvent evt) {
@@ -135,5 +155,5 @@ public class BasicGui extends Frame implements ActionListener, WindowListener, M
         txtfKeyInput.setText((char)(0) + "");
     }
     @Override public void keyPressed(KeyEvent evt) { }
-    @Override public void keyReleased(KeyEvent evt) { }
+    @Override public void keyReleased(KeyEvent evt) { }*/
 }
