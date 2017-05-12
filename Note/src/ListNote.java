@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Stefan Dedalus on 2017-05-06.
  */
-public class ListNote implements Note {
+public class ListNote extends Note {
     private ArrayList<Note> content;
 
     public ListNote(Collection<Note> a){

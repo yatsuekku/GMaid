@@ -8,7 +8,7 @@ import java.util.TreeMap;
 /**
  * Created by Stefan Dedalus on 2017-05-07.
  */
-public class NoteGraph implements Note {
+public class NoteGraph extends Note {
 
     private TreeMap<Pair<Note,Note>,ListNote> content; //Pair(a,b) in map represents edge a~b. Pair(a,a) represents vertex a;
 

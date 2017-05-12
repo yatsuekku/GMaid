@@ -5,7 +5,7 @@ import java.util.List;
  */
 
 //represents simple text notes - kind of a primitive type in Notes hierarchy.
-public class PlainTextNote implements Note {
+public class PlainTextNote extends Note {
 
     public PlainTextNote(){
         content = new String();
