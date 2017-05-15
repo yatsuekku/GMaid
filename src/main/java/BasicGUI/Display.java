@@ -1,8 +1,6 @@
-package BasicGUI;
+package main.java.BasicGUI;
 
-import Note.PlainTextNote;
-import Note.ListNote;
-import Note.Note;
+import main.java.Note.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;

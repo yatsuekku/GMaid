@@ -1,8 +1,6 @@
-package BasicGUI;
+package main.java.BasicGUI;
 
-import Note.Note;
-import Note.ListNote;
-import Note.PlainTextNote;
+import main.java.Note.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;

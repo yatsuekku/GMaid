@@ -1,6 +1,6 @@
-package BasicGUI;
+package main.java.BasicGUI;
 
-import Note.Note;
+import main.java.Note.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -62,7 +62,17 @@ public class Sprite {
     {
         gc.setFill(Paint.valueOf("lime"));
         //gc.fillRoundRect(positionX,positionY,width,height,20,20);
-        gc.strokeRoundRect(positionX,positionY,width,height,20,20);
+        if(object.getClass() == ListNote.class){
+            gc.setStroke(Paint.valueOf("red"));
+        }
+        else if(object.getClass() == PlainTextNote.class){
+            gc.setStroke(Paint.valueOf("blue"));
+        }
+        else if(object.getClass() == NoteGraph.class){
+            gc.setStroke(Paint.valueOf("orange"));
+        }
+        gc.strokeRoundRect(positionX+1,positionY+1,width-2,height-2,20,20);
+        gc.setStroke(Paint.valueOf("black"));
         if(object != null){
             gc.fillText(object.getName(),positionX + 20, positionY + 35, 260);
         }

@@ -1,4 +1,4 @@
-package Note;
+package main.java.Note;
 
 import java.util.List;
 /**
