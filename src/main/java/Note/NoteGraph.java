@@ -18,11 +18,10 @@ public class NoteGraph extends Note {
     }
 
     @Override
-
     public List<Note> getSubnotes() {
         return null;
     }
-
+    private String type = "NoteGraph";
     public void insertEdge(Note a,Note b,Note c){
         if(a == b) throw  new RuntimeException();
         else {

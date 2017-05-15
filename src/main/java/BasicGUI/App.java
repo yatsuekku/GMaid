@@ -1,5 +1,6 @@
 package BasicGUI;
 
+import FileLoader.FileLoader;
 import Note.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -61,8 +62,8 @@ public class App extends Application{
 
         /// Data ///////////////////
 
-        currentNote = new ListNote();
-        makeExampleStructure();
+        currentNote = FileLoader.loadNote("note_example.note");
+        //makeExampleStructure();
         recursiveStack = new Stack<Note>();
 
         System.out.println(currentNote);

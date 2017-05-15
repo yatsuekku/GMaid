@@ -20,7 +20,7 @@ public class ListNote extends Note {
     public List<Note> getSubnotes() {
         return content;
     }
-
+    private String type = "ListNote";
     public String toString(){
         StringBuilder ret = new StringBuilder();
         ret.append("(");

@@ -5,9 +5,9 @@ import java.util.List;
  * Created by Stefan Dedalus on 2017-05-06.
  */
 //Core interface of whole project, almost everything is a note.
-public abstract class Note {
+public class Note {
 
-    abstract List<Note> getSubnotes(); //if note contains subnotes returns list of them, else returns null
+    List<Note> getSubnotes(){return null;}; //if note contains subnotes returns list of them, else returns null
     private String name;
     public String getName(){
         return name;

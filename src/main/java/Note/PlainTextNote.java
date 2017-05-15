@@ -9,6 +9,8 @@ import java.util.List;
 //represents simple text notes - kind of a primitive type in Notes hierarchy.
 public class PlainTextNote extends Note {
 
+    private String type = "PlainTextNote";
+
     public PlainTextNote(){
         content = new String();
     }
