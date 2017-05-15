@@ -1,6 +1,6 @@
-package main.java.BasicGUI;
+package BasicGUI;
 
-import main.java.Note.*;
+import Note.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -18,11 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
+import BasicGUI.Display;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
-
+import Note.Note;
 
 /**
  * Created by Matt on 12.05.2017.
@@ -42,7 +42,7 @@ public class App extends Application{
 
         BorderPane rootLayout = new BorderPane();
 
-        Canvas centerDrawingBoard = new Canvas(600,800);
+        final Canvas centerDrawingBoard = new Canvas(600,800);
         ScrollPane centerHubArea = new ScrollPane(centerDrawingBoard);
         rootLayout.setCenter(centerHubArea);
 
@@ -50,8 +50,8 @@ public class App extends Application{
         ScrollPane leftHubArea = new ScrollPane(leftDrawingBoard);
         rootLayout.setLeft(leftHubArea);
 
-        TextField bottomInputField = new TextField();
-        TextArea bottomOutputField = new TextArea();
+        final TextField bottomInputField = new TextField();
+        final TextArea bottomOutputField = new TextArea();
         bottomOutputField.setPrefHeight(100);
         bottomOutputField.setEditable(false);
         VBox bottomHubArea = new VBox(bottomOutputField,bottomInputField);
@@ -67,10 +67,10 @@ public class App extends Application{
 
         System.out.println(currentNote);
 
-        Display display = new Display(currentNote);
+        final Display display = new Display(currentNote);
         System.out.println(currentNote.getClass());
 
-        GraphicsContext centerGraphicsContext = centerDrawingBoard.getGraphicsContext2D();
+        final GraphicsContext centerGraphicsContext = centerDrawingBoard.getGraphicsContext2D();
 
         ////////////////////////////
 

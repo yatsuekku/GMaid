@@ -1,4 +1,4 @@
-package main.java.Note;
+package Note;
 
 import javafx.util.Pair;
 import java.util.ArrayList;

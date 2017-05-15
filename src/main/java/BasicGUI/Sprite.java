@@ -1,6 +1,6 @@
-package main.java.BasicGUI;
+package BasicGUI;
 
-import main.java.Note.*;
+import Note.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

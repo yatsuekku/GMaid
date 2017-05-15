@@ -1,6 +1,7 @@
-package main.java.BasicGUI;
+package BasicGUI;
 
-import main.java.Note.*;
+import BasicGUI.Sprite;
+import Note.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
@@ -24,7 +25,7 @@ public class Display {
         object = null;
     }
 
-    Display (Note ln){
+    public Display(Note ln){
         object = ln;
         if(object.getClass() == ListNote.class){
             ListNote tmpNote = (ListNote)object;

@@ -1,4 +1,4 @@
-package main.java.Note;
+package Note;
 
 import java.util.ArrayList;
 import java.util.Collection;
